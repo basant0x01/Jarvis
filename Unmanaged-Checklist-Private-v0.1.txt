@@ -1,0 +1,71 @@
+------------------------------------
+| UNMANAGED CHECKLIST PRIVATE v0.1 |
+------------------------------------
+
+@RECON
+1. Check for disclosed Origin-IP Address
+2. Check for open available vulnerable ports
+3. Check for Juicy informations on [WayBackUrls, JS, Github]
+4. Check for Content-Discovery
+5. Check for Email's SPF/DAMRC Records
+
+@REGISTRATION
+1. Check for HTML/SSTI/SQL & Hyperlink injections
+2. Check for Weak Password Policies
+3. Check for Email/Username Enumerations
+4. Unexpired previous email verification link allow's takeover of victim email address
+	a. Enter your email address, send verification link after receiving verification link
+	b. Change previous email address to victim's email address, now verify using your previously received link.
+	[Note: Check this same issue on change password field as well]
+
+5. Check for Twin-Email Registrations
+	a. Try Response Manipulation / Case-Sensitivness
+
+6. Check for Pre-Account takeover
+7. No/Weak Email verification and 2FA allow Premanent victim's email takeover
+8. Check for Host Header Injections to bypass email verification
+9. Check for IDN-Homograph Attack
+
+@LOGIN
+1. Check for No/Bypass rate limit in Login authentication
+2. Check for DOM based XSS and Open redirections
+3. Check for Unexpired Session after logout
+4. Check for Hard Account Lockout [While Logged-In Internal Session Must Expire]
+5. Clickjacking on Login Authentication
+6. Login Authentication Bypass using JSON based Response Manipulations
+
+
+@FORGOT-PASSWORD
+1. Host Header Injection [Password-reset poisioning]
+2. Try to reset password multiple time using single reset link
+3. No Expiration of password reset link
+4. Send two different password reset link and try reset using the previous one
+5. Check for IDOR's
+6. Check for ATO by completly removing OTP/OTP-Field/Content-Types
+7. Check for SMTP Injections
+8. No Expiration of Internal account session after successfully password reset
+9. Check for User/Email Enumeration
+
+@ACCOUNT-TAKEOVERS
+
+@2-FACTOR-AUTHENTICATION
+1. Check if you can access any internal endpoints with 2FA Enable
+2. Send two different OTP's and try bypass using the previous one
+3. Change Password Internally/Externally and analyze if 2FA is automatically Disable
+
+@OTP-BYPASS
+1. Check for JSON response Manipulations
+2. Send two different OTP's and try bypass using the previous one
+
+@SESSION-MANAGEMENTS
+1. Check if internal session get expired after changing password from [Internally/Externally]
+2. Check for Session Fixiation issue on two different Browsers by changing password internally.
+
+@RANDOM
+1. [TRACE] method may disclose internal dubugging information
+2. Check for Open-Redirection/Directory-Traversal/CRLF-Injection on GET.
+3. Try manipulate with some XSS payload if application manage to save User-Agent on Dashboard.
+4. If HTML payload gets encoded, also you can access dashboard then change payloads internally and request malicious email using forgot password.
+5. Check for Tab-nabbing
+6. Check for Broken-Link-Hijackings
+7. Check for SSRF on GET.
