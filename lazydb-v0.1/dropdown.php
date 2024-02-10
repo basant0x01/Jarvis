@@ -48,11 +48,9 @@
 </style>
 
 <div class="dropdown">
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
   <button class="dropbtn">Recon & Automation</button>
   <div class="dropdown-content">
-    <a href="create_project.php">Technologies</a>
-    <a href="#">Port & Services</a>
-    <a href="#">Juicy Informations</a>
-    <a href="#">Automations</a>
+    <a href="create_project.php"></a>
   </div>
-</div> 
+</div>

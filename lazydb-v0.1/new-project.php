@@ -1,4 +1,5 @@
 <?php include "header.php" ?>
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
 <div class="jumbotron" style="background-color: lightblue;color: green;">
 
 <!DOCTYPE html>
@@ -46,29 +47,64 @@ input[type=submit]:hover {
 <h3>Create New Project</h3>
 
 <div class="container">
-  <form action="/action_page.php">
-    <label for="fname">Program Name</label>
-    <input type="text" id="fname" name="firstname" placeholder="Project name..">
+  <form action="" method="POST">
+    <label for="prgram_name">Program Name</label>
+    <input type="text" id="prgram_name" name="prgram_name" placeholder="Program name..">
 
     <label for="Plateform">Plateform</label>
-    <select id="Plateform" name="Plateform">
+    <select id="Plateform" name="plateform_name">
       <option value="Yeswehack">Yeswehack</option>
       <option value="Hackerone">Hackerone</option>
       <option value="Bugcrowd">Bugcrowd</option>
     </select>
 
-    <label for="subject">Subdomains</label>
-    <textarea id="subject" name="subject" placeholder="Paste your Domains / Subdomains.." style="height:200px"></textarea>
+    <label for="wildcard-domains">WildCard Domains</label>
+    <textarea id="wildcard-domains" name="wildcard_domain" placeholder="Paste your wildcard domains if availabe.." style="height:100px"></textarea>
+
+    <label for="subdomains">Subdomains</label>
+    <textarea id="subdomains" name="subdomain" placeholder="Paste your Domains / Subdomains.." style="height:200px"></textarea>
 
     <input type="file" name="subdomains-file"><br>
 
-    <input type="submit" value="Create">
+    <label for="outofscope">Out of scope Domains</label>
+    <textarea id="outofscope" name="outofscope_domain" placeholder="Paste your out of scope domains if availabe.." style="height:100px"></textarea>
+
+    <input type="submit" value="create_project" name="create_project"><br>
   </form>
 </div>
 
+ <?php
+
+if (isset($_POST['create_project'])) {
+
+$project_id = "";
+$prgram_name = $_POST['prgram_name'];
+$plateform_name = $_POST['plateform_name'];
+$wildcard_domain = $_POST['wildcard_domain'];
+$subdomain = $_POST['subdomain'];
+$outofscope_domain = $_POST['outofscope_domain'];
+
+$query = "INSERT INTO my_projects VALUES ('$project_id','$prgram_name', '$plateform_name', '$wildcard_domain', '$subdomain', '$outofscope_domain')";
+
+if (mysqli_query($con,$query)) {
+  echo "New project successfully created!";
+} else {
+  echo "Error: " . $sql . "<br>" . mysqli_error($con);
+}
+
+mysqli_close($con);
+
+ }
+
+
+
+?> 
+
+
+
+
 </body>
 </html>
-
 
   <style type="text/css">
     .grid-container {

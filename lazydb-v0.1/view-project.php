@@ -1,10 +1,17 @@
 <?php include "header.php" ?>
 <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+<div class="">
 
+<?php
 
-<h2>Statistics of my Automation</h2>
+  $project_id = $_GET['project_id'];
 
-<div class="jumbotron" style="color: darkgreen;">
+  $query = "SELECT * FROM my_projects WHERE project_id=$project_id";
+  $result = mysqli_query($con,$query);
+
+        // Plateform | Program | <Subdomains> Search Trick
+              while($row = mysqli_fetch_assoc($result)){
+      ?>
 
 <head>
 <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -54,47 +61,89 @@ body {
 </head>
 <body>
 
+<div class="grid-project" style="padding: 15px;">
+ <h2><?php echo $row['program_name']; ?></h2>
+ <p>You can customize and add new Modules. <a href="">More Modules</a></p>
+</div>
+
 <div class="row">
-  <div class="column">
+<!--   <div class="column">
     <div class="card">
-      <h3>Total Subdomains</h3><hr>
-      <p>423534</p>
-      <p style="font-size: 11px;"><span style="color: black;">Latest Update 2/31/2024 - 4:22 PM</span></p>
+      <h3>Wordpress / PHP</h3>
+      <p style="font-size: 11px;">Latest Scan: 1/30/2024 - 12:21 PM</p>
+      <p>New Subdomains: 21</p>
+      <p>Total Subdomains: 3324</p>
       <p><a href="">Download</a></p>
     </div>
   </div>
 
   <div class="column">
     <div class="card">
-      <h3>Total New Subdomains 24hr</h3><hr>
-      <p>36</p>
-      <p style="font-size: 11px;"><span style="color: black;">Latest Update 2/31/2024 - 4:22 PM</span></p>
+      <h3>Ports & Services</h3>
+      <p style="font-size: 11px;">Latest Scan Report: 1/30/2024 - 12:21 PM</p>
+      <p>Masscan report: <a href="">Download</a> </p>
     </div>
   </div>
   
+  <div class="column">
+    <div class="card">
+      <h3>Nuclei Scanner</h3>
+      <p style="font-size: 11px;">Latest Scan Report: 1/30/2024 - 12:21 PM</p>
+      <p><a href="">Download</a></p>
+    </div>
+  </div> -->
+  
+  <div class="column">
+    <div class="card">
+      <h3 style="background-color: white;padding: 13px;">Content Discovery</h3>
+      <p style="font-size: 13px;">Scan Type: Normal</p>
+      <p style="font-size: 11px;font-family: IMPACT;">Latest Scan Report: 7/28/2024 - 4:06 AM</p>
+      <p><a style="padding: 10px;" href="">Download</a> | <a style="padding: 10px;" href="">Settings</a></p>
+    </div>
+  </div>
 </div>
 
 </body>
 
-  <style type="text/css">
-    .grid-container {
-      display: grid;
-      grid-template-columns: auto auto auto;
-    }
-    .grid-item {
-      padding: 1px;
-      font-size: 17px;
-      text-align: center;
-    }
-  </style>
 
-  <style>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<!-- ----------------------------------------->
+
+
+      <?php
+
+        }
+
+    ?>
+
+<style>
 
 .container {
-  border-radius: 5px;
   background-color: #f2f2f2;
   padding: 20px;
-  color: black;
 }
 </style>
 
@@ -180,42 +229,8 @@ body {
 </style>
 
 <div class="search-container" style="background-color: #f8f2ec;padding: 15px;">
-  <h5>Please filter based on your [ Subdomain | Project & Platforms ] </h5>
-    <form action="" method="POST">
-      <input style="width: 30%;height: 30px;" type="text" placeholder="Search your requirements.." name="search">
-      <button style="width: 8%;height: 30px;" type="submit"><i class="fa fa-search"></i></button>
-    <p>
-      <?php
-      if (isset($_POST['search'])) {
-
-        $client_query = $_POST['search'];
-        $query = "SELECT * FROM my_projects WHERE program_name='$client_query'";
-        $result = mysqli_query($con,$query);
-
-        // Plateform | Program | <Subdomains> Search Trick
-              while($row = mysqli_fetch_assoc($result)){
-
-          ?>
-          <p>
-            <span>Program Name:</span>
-            <?php echo $row['program_name']; ?><br>
-            <span>Plateform Name: </span>
-            <?php echo $row['plateform_name']; ?><br>
-            <span>Wildcard Domains:</span><a href=""> Click to View</a><br>
-            <span>Subdomains:</span><a href=""> Click to View</a><br>
-            <span>Out Of Scope Domains:</span><a href=""> Click to View</a><br>
-          </p>
-
-          <?php
-
-        }
-
-      }
-
-      ?>
-    </p>
+  <h5> </h5>
 
 
-    </form>
-  </div>
+</div>
 <?php include "footer.php" ?>

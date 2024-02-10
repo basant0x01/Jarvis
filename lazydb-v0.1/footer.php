@@ -4,7 +4,7 @@
         </div>
       </div>
       <footer class="footer">
-        <p>&copy; Basant Karki 2024 | LazyDB v0.1 </p>
+        <p>&copy; Basant Karki 2024 | LazyDB v0.1 ( Smart Database for Lazy Hackers )</p>
       </footer>
 
     </div>

@@ -1,4 +1,5 @@
 <?php include "header.php" ?>
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
 <div class="projects">
 
 <h4 style="text-align: right;"><a style="text-decoration: none;" href="new-project.php">Create New Projects</a></h4>
@@ -9,12 +10,48 @@
       <input style="width: 30%;height: 30px;" type="text" placeholder="Search your program.." name="search">
       <button style="width: 8%;height: 30px;" type="submit"><i class="fa fa-search"></i></button>
     </form><br>
+
   <h4>My bugbounty Programs </h4>
-<div class="grid-project">
-  <div class="grid-item"><a href="">Telefonica</a>   <a style="color: white;background-color: black;padding: 5px;margin-left: 50%;font-size: 15px;" href="">Yes<span style="color:red;">we</span>hack</a></div>
-  <div class="grid-item"><a href="">Oppo BBP</a>   <a style="color: white;background-color: black;padding: 5px;margin-left: 50%;font-size: 15px;" href="">Hackerone</a></div>
-  <div class="grid-item"><a href="">Dell BBP</a>   <a style="color: darkorange;background-color: antiquewhite;padding: 5px;margin-left: 50%;font-size: 15px;" href="">Bugcrowd</a></div>
-</div>
+
+  <table class="table table-hover">
+
+  <table class="table" style="font-size: 13px;">
+  <thead>
+    <tr>
+      <th scope="col">#</th>
+      <th scope="col">Program Name</th>
+      <th scope="col">Plateform Name</th>
+      <th scope="col">Visibility</th>
+    </tr>
+  </thead>
+
+  <?php
+
+        $query = "SELECT * FROM my_projects";
+        $result = mysqli_query($con,$query);
+
+        // Plateform | Program | <Subdomains> Search Trick
+              while($row = mysqli_fetch_assoc($result)){
+      ?>
+
+          <tbody>
+            <tr>
+              <th scope="row"><?php echo $row['project_id']; ?></th>
+              <td><a style="text-decoration: none;" href="view-project.php?project_id=<?php echo $row['project_id']; ?>"><?php echo $row['program_name'];?></a></td>
+              <td><a style="background-color: black;color: white;padding: 5px;text-decoration: none;" href=""><?php echo $row['plateform_name']; ?></a></td>
+              <td>Private</td>
+            </tr>
+          </tbody>
+
+
+  <?php
+
+        }
+
+
+  ?>
+
+</table>
 
 <style>
 .grid-container {
