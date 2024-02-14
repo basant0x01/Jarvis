@@ -1,0 +1,15 @@
+Database Name: lazydb
+  Tables:
+    my_projects:
+      program_id
+      program_name
+      program_platform
+      program_visiblity
+      program_type
+      program_domains
+      program_subdomains
+    users:
+      user_id
+      username
+      user_email
+      password
