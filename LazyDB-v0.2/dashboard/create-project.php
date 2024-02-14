@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<?php include "db.php" ?>
+<?php include "db.php"; ?>
 <html lang="en">
   <head>
     <meta charset="utf-8" />
@@ -41,7 +41,7 @@
       >
         <div class="logo">
           <a href="./dashboard.php" class="simple-text logo-normal">
-            <img src="../images/LazyDB-logos_white.png" alt="logo" />
+            <img src="../images/LazyDB-logos_black.png" alt="logo" />
           </a>
         </div>
         <div class="sidebar-wrapper">

@@ -1,9 +1,12 @@
 <!DOCTYPE html>
-<?php include "db.php" ?>
+<?php 
+session_start();
+include "db.php"; 
+?>
 <html lang="en">
   <head>
     <meta charset="utf-8" />
-    <link rel="apple-touch-icon" sizes="76x76" href="#" />
+    <link rel="apple-touch-icon" sizes="76x76" href="" />
     <link rel="icon" type="image/png" href="./img/favicon.ico" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
@@ -41,7 +44,7 @@
       >
         <div class="logo">
           <a href="./dashboard.html" class="simple-text logo-normal">
-            <img src="../images/LazyDB-logos_white.png" alt="logo" />
+            <img src="../images/LazyDB-logos_black.png" alt="logo" />
           </a>
         </div>
         <div class="sidebar-wrapper">
@@ -139,7 +142,7 @@
                     <i class="material-icons">person</i>
                     <p class="d-lg-none d-md-block">Account</p>
                     <span class="hide-arrow-admin-text">
-                      Admin
+                      <?php echo $_SESSION['username']; ?>
                       <i class="material-icons">arrow_drop_down</i>
                     </span>
                   </a>
@@ -151,7 +154,7 @@
                     <a class="dropdown-item" href="user-profile.html">Profile</a>
                     <a class="dropdown-item" href="#">Settings</a>
                     <div class="dropdown-divider"></div>
-                    <a class="dropdown-item" href="#">Log out</a>
+                    <a class="dropdown-item" href="logout.php">Log out</a>
                   </div>
                 </li>
               </ul>
@@ -340,7 +343,7 @@
                                 alt="user"
                               />
                             </td>
-                            <td><?php echo $row['program_name']; ?></td>
+                            <td><a href="view-project.php?program_id=<?php echo $row['program_id']; ?>"><?php echo $row['program_name']; ?></td>
                             <td><?php echo $row['program_platform']; ?></td>
                             <td><?php echo $row['program_visiblity']; ?></td>
                             <td><?php echo $row['program_type']; ?></td>

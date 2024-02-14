@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<?php include "db.php"; ?>
+<?php include "db.php" ?>
 <html lang="en">
   <head>
     <meta charset="utf-8" />
@@ -40,7 +40,7 @@
         data-image=""
       >
         <div class="logo">
-          <a href="./dashboard.php" class="simple-text logo-normal">
+          <a href="./dashboard.html" class="simple-text logo-normal">
             <img src="../images/LazyDB-logos_black.png" alt="logo" />
           </a>
         </div>
@@ -160,214 +160,176 @@
         </nav>
 
 
-                        <?php
+          <?php
+          $program_id = $_GET['program_id'];
+          $query = "select * from my_projects where program_id=$program_id";
+          $result = mysqli_query($con,$query);
 
-                        $program_id = $_GET['program_id'];
+          // Plateform | Program | <Subdomains> Search Trick
+          while($row = mysqli_fetch_assoc($result)){
 
-                        $query = "select * from my_projects where program_id=$program_id";
-                        $result = mysqli_query($con,$query);
+          ?>        
 
-                        // Plateform | Program | <Subdomains> Search Trick
-                           while($row = mysqli_fetch_assoc($result)){
-
-                          ?>
 
 
         <!-- End Navbar -->
         <div class="content">
-          <div class="container-fluid">
+
             <div class="row">
-              <div class="col-md-8">
-                <div class="card">
+              <div class="col-md-12">
+                <div class="card custom-user-info-card">
                   <div class="card-header card-header-danger">
                     <div class="float-left">
-                      <a
-                        ><span
-                          class="mr-2 custom-material-icon"
-                          style="line-height: 4"
-                        >
-                          <img src="./img/Group 1380.png" /> </span
-                        ><span>Create Project</span></a
-                      >
+                      <a><span class="material-icons custom-material-icon"></span
+                        ><span><?php echo $row['program_name']; ?></span></a>
+                    </div>
+                    <div class="float-right">
+                      <div class="user-profile-nav">
+<!--                         <div class="searchbar">
+                          <input
+                            class="search_input"
+                            type="text"
+                            name=""
+                            placeholder="Search..."
+                          />
+                          <a href="#" class="search_icon"
+                            ><i class="material-icons">search</i></a
+                          >
+                        </div>
+ -->                        <!-- <div class="btn-add-group">
+                          <button type="submit" class="btn btn-white">
+                            <span class="material-icons add-icon">
+                              add_box
+                            </span>
+                            <a href="create-project.php">Add New Project</a>
+                          </button>
+                          <button type="submit" class="btn btn-white">
+                            <span class="material-icons add-icon">
+                              picture_as_pdf
+                            </span>
+                            PDF
+                          </button>
+                        </div> -->
+                      </div>
                     </div>
                   </div>
+
+
+          
+          <div class="container-fluid">
+            <div class="row">
+              <div class="col-lg-3 col-md-6 col-sm-6">
+                <div class="custom-icon-card card card-stats">
+                  <div class="card-header card-header-warning card-header-icon">
+<!--                 <div class="card-icon">
+                      <img src="./img/Group 1381.png" alt="building" />
+                    </div> -->
+                    <p class="card-category">Total Subdomains of <?php echo $row['program_name']; ?></p>
+                    <h3 class="card-title">1252452</h3>
+                  </div>
+
                   <div class="card-body">
-
-
-                    <form action="" method="POST">
-                      <div class="row">
-                        <div class="col-md-6">
-                          <div class="form-group">
-                            <label class="bmd-label-floating">Program Name</label>
-                            <input value="<?php echo $row['program_name']; ?>" name="program_name" type="text" class="form-control" />
-                          </div>
-                        </div>
-                        <div class="col-md-6">
-                          <div class="form-group">
-
-                            <label class="bmd-label-floating">Select Platform</label>
-                             <select value="<?php echo $row['program_platform']; ?>" style="width: 250px;text-align: center;" name="program_platform" id="program_platform">
-
-                                <option style="background-color: green;color: white;" value="<?php echo $row['program_platform']; ?>"><?php echo $row['program_platform']; ?></option>
-                                <option value="Hackerone">Hackerone</option>
-                                <option value="Bugcrowd">Bugcrowd</option>
-                                <option value="YesWeHack">YesWeHack</option>
-                              </select> 
-
-                          </div>
-                        </div>
+                    <div class="stats">
+                      <div class="progress" style="height: 4px">
+                        <div
+                          class="progress-bar bg-danger"
+                          role="progressbar"
+                          style="width: 65%"
+                          aria-valuenow="65"
+                          aria-valuemin="0"
+                          aria-valuemax="100"
+                        ></div>
                       </div>
-                      <div class="row">
-                        <div class="col-md-6">
-                          <div class="form-group">
-                            <label class="bmd-label-floating"
-                              >Select Visiblity</label>
-                              <select value="<?php echo $row['program_visiblity']; ?>" style="width: 250px;text-align: center;" name="program_visiblity" id="program_visiblity">
-                                <option style="background-color: green;color: white;" value="<?php echo $row['program_visiblity']; ?>"><?php echo $row['program_visiblity']; ?></option>
-                                <option value="Private">Private</option>
-                                <option value="Public">Public</option>
-                              </select> 
-
-                          </div>
-                        </div>
-                        <div class="col-md-6">
-                          <div class="form-group">
-                            <label class="bmd-label-floating"
-                              >Select Program Type</label>
-                              <select value="<?php echo $row['program_type']; ?>" style="width: 250px;text-align: center;" name="program_type" id="program_type">
-                                <option style="background-color: green;color: white;" value="<?php echo $row['program_type']; ?>"><?php echo $row['program_type']; ?></option>
-                                <option value="BBP">BBP</option>
-                                <option value="VDP">VDP</option>
-                              </select> 
-                          </div>
-
-                        </div>
-
-                      </div>
-
-                  
-                    <p><label for="program_domains"></label></p>
-                    <textarea id="program_domains" name="program_domains" rows="4" cols="50" placeholder=" Paste your domains"><?php echo $row['program_domains']; ?></textarea><br>
-              
-                
-                    <p><label for="program_subdomains"></label></p>
-                    <textarea id="program_subdomains" name="program_subdomains" rows="4" cols="50" placeholder=" Paste your subdomains"><?php echo $row['program_subdomains']; ?></textarea><br>
-         
-
-                      <div class="row mt-5">
-                        <div class="col-md-6">
-                          <div class="form-group profile-upload">
-                            <div class="file-field">
-                              <div class="mb-4">
-                                <img
-                                  src="./img/Group 1380.png"
-                                  class="
-                                    rounded-circle
-                                    z-depth-1-half
-                                    avatar-pic
-                                  "
-                                  alt="example placeholder avatar"
-                                />
-                              </div>
-                              <div class="d-flex justify-content-left">
-                                <div
-                                  class="btn-mdb-color btn-rounded float-left"
-                                >
-                                  <span class="ml-3">Add photo</span>
-                                  <input type="file" />
-                                </div>
-                              </div>
-                            </div>
-                          </div>
-                        </div>
-                        <div class="col-md-6 profile-save-btn">
-                          <button name="create_project" type="create_project" class="btn btn-primary">
-                            Create Project
-                          </button>
-                        </div>
-                      </div>
-                      <div class="clearfix"></div>
-                    </form>
-
-                           <?php
-
-                          }
-
-                          ?>
-
+                    </div>
                   </div>
                 </div>
               </div>
+              <div class="col-lg-3 col-md-6 col-sm-6">
+                <div class="custom-icon-card card card-stats">
+                  <div class="card-header card-header-success card-header-icon">
+<!--                 <div class="card-icon">
+                      <img src="./img/Group 1382.png" alt="building" />
+                    </div> -->
+                    <p class="card-category">New Subdomains 24/hr</p>
+                    <h3 class="card-title">23</h3>
+                  </div>
+                  <div class="card-body">
+                    <div class="stats">
+                      <div class="progress" style="height: 4px">
+                        <div
+                          class="progress-bar bg-success"
+                          role="progressbar"
+                          style="width: 65%"
+                          aria-valuenow="65"
+                          aria-valuemin="0"
+                          aria-valuemax="100"
+                        ></div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div class="col-lg-3 col-md-6 col-sm-6">
+                <div class="custom-icon-card card card-stats">
+                  <div class="card-header card-header-danger card-header-icon">
+<!--                 <div class="card-icon">
+                      <img src="./img/Group 1324.png" alt="building" />
+                    </div> -->
+                    <p class="card-category">Lorem Ipsum</p>
+                    <h3 class="card-title">Lorem Ipsum</h3>
+                  </div>
+                  <div class="card-body">
+                    <div class="stats">
+                      <div class="progress" style="height: 4px">
+                        <div
+                          class="progress-bar bg-danger"
+                          role="progressbar"
+                          style="width: 65%"
+                          aria-valuenow="65"
+                          aria-valuemin="0"
+                          aria-valuemax="100"
+                        ></div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div class="col-lg-3 col-md-6 col-sm-6">
+                <div class="custom-icon-card card card-stats">
+                  <div class="card-header card-header-info card-header-icon">
+<!--                 <div class="card-icon">
+                      <img src="./img/Group 1383.png" alt="building" />
+                    </div> -->
+                    <p class="card-category">Lorem Ipsum</p>
+                    <h3 class="card-title">Lorem Ipsum</h3>
+                  </div>
+                  <div class="card-body">
+                    <div class="stats">
+                      <div class="progress" style="height: 4px">
+                        <div
+                          class="progress-bar bg-info"
+                          role="progressbar"
+                          style="width: 65%"
+                          aria-valuenow="65"
+                          aria-valuemin="0"
+                          aria-valuemax="100"
+                        ></div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
 
-               <?php
 
-                  if (isset($_POST['create_project'])) {
-
-                  $program_id = $_GET['program_id'];
-                  $program_name = $_POST['program_name'];
-                  $program_platform = $_POST['program_platform'];
-                  $program_visiblity = $_POST['program_visiblity'];
-                  $program_type = $_POST['program_type'];
-                  $program_domains = $_POST['program_domains'];
-                  $program_subdomains = $_POST['program_subdomains'];
-
-                  $query = "UPDATE my_projects SET program_id='$program_id', program_name='$program_name', program_platform='$program_platform', program_visiblity='$program_visiblity', program_type='$program_type', program_domains='$program_domains', program_subdomains='$program_subdomains' WHERE program_id=$program_id";
-
-                  if (mysqli_query($con, $query)) {
-
-                    ?>
-
-                    <script type="text/javascript">alert("Project Successfully Updated")</script>
-
-                    <?php
-
-                  } else {
-                    echo "Error: " . $sql . "<br>" . mysqli_error($con);
-                  }
-
-                  mysqli_close($con);
+              <?php
 
               }
 
-            ?> 
+              ?>
 
 
 
-
-
-
-              <div class="col-md-4">
-                <div class="card card-profile">
-                  <div class="card-avatar">
-                    <a href="javascript:;">
-                      <img class="img" src="./img/17.png" />
-                    </a>
-                  </div>
-                  <div class="card-body">
-                    <h6 class="card-category text-gray">
-                      Mahammad Kamrul Hasan
-                    </h6>
-                    <h4 class="card-title">Admin</h4>
-                    <span class="card-description pt-3">
-                      <p>youremail@gmail.com</p>
-                      <p>+880 00000 0000000</p>
-                    </span>
-                  </div>
-                </div>
-              </div>
-            </div>
-
-                      <div class="clearfix"></div>
-                    </form>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
-    <div class="fixed-plugin"></div>
     <!--   Core JS Files   -->
     <script src="./js/vendor/jquery-3.2.1.min.js"></script>
     <script src="./js/popper.min.js"></script>
@@ -381,13 +343,13 @@
     <script src="./js/jquery.validate.min.js"></script>
     <!-- Plugin for the Wizard, full documentation here: https://github.com/VinceG/twitter-bootstrap-wizard -->
     <script src="./js/jquery.bootstrap-wizard.js"></script>
-    <!--  Plugin for Select, full documentation here: http://silviomoreto.github.io/bootstrap-select -->
+    <!--	Plugin for Select, full documentation here: http://silviomoreto.github.io/bootstrap-select -->
     <script src="./js/bootstrap-selectpicker.js"></script>
     <!--  Plugin for the DateTimePicker, full documentation here: https://eonasdan.github.io/bootstrap-datetimepicker/ -->
     <script src="./js/bootstrap-datetimepicker.min.js"></script>
     <!--  DataTables.net Plugin, full documentation here: https://datatables.net/  -->
     <script src="./js/jquery.dataTables.min.js"></script>
-    <!--  Plugin for Tags, full documentation here: https://github.com/bootstrap-tagsinput/bootstrap-tagsinputs  -->
+    <!--	Plugin for Tags, full documentation here: https://github.com/bootstrap-tagsinput/bootstrap-tagsinputs  -->
     <script src="./js/bootstrap-tagsinput.js"></script>
     <!-- Plugin for Fileupload, full documentation here: http://www.jasny.net/bootstrap/javascript/#fileinput -->
     <script src="./js/jasny-bootstrap.min.js"></script>
