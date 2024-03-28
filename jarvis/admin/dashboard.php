@@ -9,9 +9,25 @@
                     <div class="card-icon">
                       <img src="./img/Group 1381.png" alt="building" />
                     </div>
+                    <?php
+
+                      $query = "SELECT COUNT(*) AS total_projects FROM my_projects";
+                      $result = mysqli_query($con, $query);
+                      if ($result) {
+                            $row = mysqli_fetch_assoc($result);
+                            $total_projects = $row['total_projects'];
+                      } else {
+                            $total_projects = 0;
+                        }
+                    ?>
+
                     <p class="card-category">Total Projects</p>
-                    <h3 class="card-title">2</h3>
-                  </div>
+                    <h3 class="card-title"><?php echo $total_projects; ?></h3>
+                    </div>
+
+                    <?php
+
+                    ?>
 
                   <div class="card-body">
                     <div class="stats">
@@ -35,9 +51,33 @@
                     <div class="card-icon">
                       <img src="./img/Group 1382.png" alt="building" />
                     </div>
-                    <p class="card-category">Total Subdomains</p>
-                    <h3 class="card-title">23445</h3>
-                    <a href="">Export</a>
+
+                    <?php
+
+                        $query = "SELECT program_subdomains FROM my_projects";
+                        $result = mysqli_query($con, $query);
+
+                        $subdomains = '';
+
+                        if ($result) {
+                            while ($row = mysqli_fetch_assoc($result)) {
+                                $subdomain_string = $row['program_subdomains'];
+                                $subdomain_array = explode(",", $subdomain_string); // Assuming subdomains are separated by commas
+                                foreach ($subdomain_array as $subdomain) {
+                                    // Trim to remove leading/trailing whitespaces
+                                    $subdomains .= trim($subdomain) . "\n";
+                                }
+                            }
+                        }
+
+                        $total_subdomains = count(explode("\n", trim($subdomains)));
+
+                      ?>
+
+                      <p class="card-category">Total Subdomains</p>
+                      <h3 class="card-title"><?php echo $total_subdomains; ?></h3>
+                      <a href="">Export</a>
+                      
                   </div>
                   <div class="card-body">
                     <div class="stats">
@@ -61,8 +101,8 @@
                     <div class="card-icon">
                       <img src="./img/Group 1324.png" alt="building" />
                     </div>
-                    <p class="card-category">Subdomains 24/hr</p>
-                    <h3 class="card-title">31</h3>
+                    <p class="card-category">N/A</p>
+                    <h3 class="card-title">N/A</h3>
                     <a href="">Export</a>
                   </div>
                   <div class="card-body">
@@ -87,8 +127,8 @@
                     <div class="card-icon">
                       <img src="./img/Group 1383.png" alt="building" />
                     </div>
-                    <p class="card-category">Bug Reported 24/hr</p>
-                    <h3 class="card-title">3</h3>
+                    <p class="card-category">N/A</p>
+                    <h3 class="card-title">N/A</h3>
                   </div>
                   <div class="card-body">
                     <div class="stats">
@@ -107,9 +147,6 @@
                 </div>
               </div>
             </div>
-
-
-
 
             <div class="row">
               <div class="col-md-12">
@@ -195,7 +232,7 @@
                                     edit-btn"><a style="color: white;" href="edit-project.php?program_id=<?php echo $row['program_id']; ?>">Edit</a></button><button type="button" class="
                                     custom-action-btn
                                     btn btn-danger
-                                    delete-btn"><a style="color: white;" href="delete-project.php?program_id=<?php echo $row['program_id']; ?>">Delete</button>
+                                    delete-btn"><a style="color: white;" href="delete-project.php?program_id=<?php echo $row['program_id']; ?>">Del</button>
                               </div>
                             </td>
                           </tr>
