@@ -161,17 +161,17 @@
                     </div>
                     <div class="float-right">
                       <div class="user-profile-nav">
-                        <div class="searchbar">
-                          <input
-                            class="search_input"
-                            type="text"
-                            name=""
-                            placeholder="Search..."
-                          />
-                          <a href="#" class="search_icon"
-                            ><i class="material-icons">search</i></a
-                          >
+
+                        <!-- Add a search form -->
+
+                        <div style="margin-top: 11px;margin-right: 40px;">
+                          <form method="POST">
+                              <input type="text" name="search_query" placeholder="Src: Program/Subdomain">
+                              <button type="submit" name="search">Search</button><br>
+                          </form>
                         </div>
+
+
                         <div class="btn-add-group">
                           <button type="submit" class="btn btn-white">
                             <span class="material-icons add-icon">
@@ -190,6 +190,7 @@
                     </div>
                   </div>
 
+
                   <div class="card-body custom-user-table-data">
                     <div class="table-responsive">
                       <table class="table">
@@ -203,57 +204,48 @@
                         </thead>
 
                         <?php
-                        $query = "select * from my_projects";
-                        $result = mysqli_query($con,$query);
+                            // Check if search form is submitted
+                            if(isset($_POST['search'])) {
+                                $search_query = $_POST['search_query'];
+                                // Modify the SQL query to include search filter for both program name and subdomain
+                                $query = "SELECT * FROM my_projects WHERE program_name LIKE '%$search_query%' OR program_subdomains LIKE '%$search_query%'";
+                            } else {
+                                // Default query to fetch all projects
+                                $query = "SELECT * FROM my_projects";
+                            }
+                            
+                            $result = mysqli_query($con, $query);
+                        ?>
 
-                        // Plateform | Program | <Subdomains> Search Trick
-                           while($row = mysqli_fetch_assoc($result)){
-
-                          ?>
-
-                        <tbody>
-                          <tr>
-                            <td>
-                              <img
-                                class="circle"
-                                src="./img/19.png"
-                                alt="user"
-                              />
-                            </td>
-                            <td><a href="view-project.php?program_id=<?php echo $row['program_id']; ?>"><?php echo $row['program_name']; ?></td>
-                            <td><?php echo $row['program_platform']; ?></td>
-                            <td><?php echo $row['program_visiblity']; ?></td>
-                            <td><?php echo $row['program_type']; ?></td>
-                            <td class="text-primary">
-                              <div class="action-btn-group float-right d-flex"><button type="button" class="
-                                    custom-action-btn
-                                    btn btn-primary
-                                    mr-2
-                                    edit-btn"><a style="color: white;" href="edit-project.php?program_id=<?php echo $row['program_id']; ?>">Edit</a></button><button type="button" class="
-                                    custom-action-btn
-                                    btn btn-danger
-                                    delete-btn"><a style="color: white;" href="delete-project.php?program_id=<?php echo $row['program_id']; ?>">Del</button>
-                              </div>
-                            </td>
-                          </tr>
-                        </tbody>
-
-                        <?php
-
-                          }
-
-                          ?>
-
-                      </table>
+                            </thead>
+                            <tbody>
+                                <?php while($row = mysqli_fetch_assoc($result)) { ?>
+                                    <tr>
+                                        <td><img class="circle" src="./img/19.png" alt="user"></td>
+                                        <td><a href="view-project.php?program_id=<?php echo $row['program_id']; ?>"><?php echo $row['program_name']; ?></a></td>
+                                        <td><?php echo $row['program_platform']; ?></td>
+                                        <td><?php echo $row['program_visiblity']; ?></td>
+                                        <td><?php echo $row['program_type']; ?></td>
+                                        <td class="text-primary">
+                                            <div class="action-btn-group float-right d-flex">
+                                                <button type="button" class="custom-action-btn btn btn-primary mr-2 edit-btn">
+                                                    <a style="color: white;" href="edit-project.php?program_id=<?php echo $row['program_id']; ?>">Edit</a>
+                                                </button>
+                                                <button type="button" class="custom-action-btn btn btn-danger delete-btn">
+                                                    <a style="color: white;" href="delete-project.php?program_id=<?php echo $row['program_id']; ?>">Del</a>
+                                                </button>
+                                            </div>
+                                        </td>
+                                    </tr>
+                                <?php } ?>
+                            </tbody>
+                        </table>
                     </div>
-                  </div>
                 </div>
-              </div>
             </div>
-          </div>
         </div>
-      </div>
     </div>
+</div>
 
     <!--   Core JS Files   -->
     <script src="./js/vendor/jquery-3.2.1.min.js"></script>
