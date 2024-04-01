@@ -25,8 +25,8 @@
                           <div >
 
                         </div>
-                        <a style="color: purple;background-color: white;padding: 6px;border-radius: 5px;font-family: sans-serif;" href="">Add Modules</a>
-                        <a style="color: purple;background-color: white;padding: 6px;border-radius: 5px;font-family: sans-serif;margin-left: 1em;" href="">
+
+                        <a style="color: purple;background-color: white;padding: 4px;border-radius: 5px;font-family: sans-serif;margin-left: 1em;" href="">
                           
                           <form id="scriptForm" method="post" action="">
                             <button type="submit" name="run_script" onclick="changeStatus()">Start Engine</button>
@@ -95,7 +95,8 @@
                       <img src="./img/Group 1382.png" alt="building" />
                     </div> -->
                     <p class="card-category">Engine Status</p>
-                    <a href=""><div id="status">Nutral</div></a>
+                    <a href=""><div id="status">Neutral</div></a>
+                    <h3 class="card-title">N/A</h3>
                     <script>
                     function changeStatus() {
                         document.getElementById("status").innerHTML = "Engine has running...";
