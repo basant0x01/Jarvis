@@ -22,32 +22,17 @@
                     </div>
                     <div class="float-right">
                       <div class="user-profile-nav">
-<!--                         <div class="searchbar">
-                          <input
-                            class="search_input"
-                            type="text"
-                            name=""
-                            placeholder="Search..."
-                          />
-                          <a href="#" class="search_icon"
-                            ><i class="material-icons">search</i></a
-                          >
+                          <div >
+
                         </div>
- -->                        <!-- <div class="btn-add-group">
-                          <button type="submit" class="btn btn-white">
-                            <span class="material-icons add-icon">
-                              add_box
-                            </span>
-                            <a href="create-project.php">Add New Project</a>
-                          </button>
-                          <button type="submit" class="btn btn-white">
-                            <span class="material-icons add-icon">
-                              picture_as_pdf
-                            </span>
-                            PDF
-                          </button>
-                        </div> -->
                         <a style="color: purple;background-color: white;padding: 6px;border-radius: 5px;font-family: sans-serif;" href="">Add Modules</a>
+                        <a style="color: purple;background-color: white;padding: 6px;border-radius: 5px;font-family: sans-serif;margin-left: 1em;" href="">
+                          
+                          <form id="scriptForm" method="post" action="">
+                            <button type="submit" name="run_script" onclick="changeStatus()">Start Engine</button>
+                        </form>
+
+                        </a>
                       </div>
                     </div>
                   </div>
@@ -109,9 +94,37 @@
 <!--                 <div class="card-icon">
                       <img src="./img/Group 1382.png" alt="building" />
                     </div> -->
-                    <p class="card-category">N/A</p>
-                    <a href="">N/A</a>
-                    <h3 class="card-title">N/A</h3>
+                    <p class="card-category">Engine Status</p>
+                    <a href=""><div id="status">Nutral</div></a>
+                    <script>
+                    function changeStatus() {
+                        document.getElementById("status").innerHTML = "Engine has running...";
+                    }
+                    </script>
+
+
+                    <?php
+                        if (isset($_POST['run_script'])) {
+                            // Bash script file path
+                            $script_path = "bash/subdomain-enumerator.sh";
+
+                            // Execute the bash script
+                            exec("bash $script_path", $output, $return_status);
+
+                            // Check if execution was successful
+                            if ($return_status === 0) {
+                                echo "<script>document.getElementById('status').innerHTML = 'Task completed';</script>";
+                                // Output of the script (if any)
+                                foreach ($output as $line) {
+                                    echo $line . "<br>";
+                                }
+                            } else {
+                                echo "<script>document.getElementById('status').innerHTML = 'Error executing bash script!';</script>";
+                            }
+                        }
+
+                        ?>
+
                   </div>
                   <div class="card-body">
                     <div class="stats">
