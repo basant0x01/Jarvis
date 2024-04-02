@@ -106,32 +106,29 @@
                     </script>
 
                     <?php
-                        if (isset($_POST['run_script'])) {
-                            // Bash script file path
-                            $script_path = "bash/subdomain-enumerator.sh";
+                    // Function to execute the program
+                    function executeProgram() {
+                        // Bash script file path
+                        $script_path = "bash/subdomain-enumerator.sh";
 
-                            // Execute the bash script
-                            exec("bash $script_path", $output, $return_status);
+                        // Execute the bash script
+                        exec("bash $script_path", $output, $return_status);
 
-                            // Check if execution was successful
-                            if ($return_status === 0) {
-                                echo "<script>document.getElementById('status').innerHTML = 'Task completed';</script>";
-                                // Output of the script (if any)
-                                foreach ($output as $line) {
-                                    echo $line . "<br>";
-                                }
-                                
-                                // Meta refresh tag to reload the page instantly
-                                echo '<meta http-equiv="refresh" content="0">';
-                                
-                            } else {
-                                echo "<script>document.getElementById('status').innerHTML = 'Error executing bash script!';</script>";
+                        // Check if execution was successful
+                        if ($return_status === 0) {
+                            echo "<script>document.getElementById('status').innerHTML = 'Task completed';</script>";
+                            // Output of the script (if any)
+                            foreach ($output as $line) {
+                                echo $line . "<br>";
                             }
+
+                            // Meta refresh tag to reload the page instantly
+                            echo '<meta http-equiv="refresh" content="0">';
+                        } else {
+                            echo "<script>document.getElementById('status').innerHTML = 'Error executing bash script!';</script>";
                         }
-                        ?>
+                    }
 
-
-                    <?php
                     // Function to insert subdomains into the database
                     function insertSubdomains($con, $subdomains_file, $program_id) {
                         // Check if the file exists
@@ -174,6 +171,36 @@
                         }
                     }
 
+                    // Function to add domain to scope.txt file
+                    function addDomainToScope($domain) {
+                        // Path to the scope file
+                        $scope_file = "bash/bash-results/scope.txt";
+
+                        // Append the domain to the scope file
+                        if (!empty($domain)) {
+                            file_put_contents($scope_file, $domain . PHP_EOL, FILE_APPEND);
+                            echo "Domain added to scope file.";
+                        } else {
+                            echo "No domain found to add.";
+                        }
+                    }
+
+                    // Function to insert all subdomains into program_subdomains column
+                    function insertAllSubdomains($con, $subdomains_file, $program_id) {
+                        // Check if the file exists
+                        if (file_exists($subdomains_file)) {
+                            // Read the contents of the file
+                            $subdomains = file($subdomains_file, FILE_IGNORE_NEW_LINES | FILE_SKIP_EMPTY_LINES);
+
+                            // Implode the array to a string
+                            $subdomains_string = implode(", ", $subdomains);
+
+                            // Insert subdomains into the database
+                            insertSubdomains($con, $subdomains_string, $program_id);
+                        } else {
+                            echo "Subdomains file not found.";
+                        }
+                    }
 
                     // Check if the button is clicked to insert subdomains
                     if (isset($_POST['insert_subdomains'])) {
@@ -191,14 +218,25 @@
                             die("Connection failed: " . $con->connect_error);
                         }
 
-                        // Path to the subdomains file
-                        $subdomains_file = "bash/bash-results/subdomains.txt";
-
                         // Get program_id from GET parameters
                         $program_id = isset($_GET['program_id']) ? intval($_GET['program_id']) : 0;
 
-                        // Insert subdomains into the database
-                        insertSubdomains($con, $subdomains_file, $program_id);
+                        // Fetch the domain from the database based on program_id
+                        $query = "SELECT program_domains FROM my_projects WHERE program_id = $program_id";
+                        $result = mysqli_query($con, $query);
+
+                        // Fetch the domain from the result
+                        $row = mysqli_fetch_assoc($result);
+                        $domain = $row['program_domains'];
+
+                        // Add domain to scope file
+                        addDomainToScope($domain);
+
+                        // Path to the subdomains file
+                        $subdomains_file = "bash/bash-results/subdomains.txt";
+
+                        // Insert all subdomains into the database
+                        insertAllSubdomains($con, $subdomains_file, $program_id);
 
                         // Close MySQL connection
                         $con->close();
@@ -208,9 +246,9 @@
                     if (isset($_POST['run_script'])) {
                         // Execute the program
                         executeProgram();
-                      }
-
+                    }
                     ?>
+
 
                   </div>
                   <div class="card-body">
@@ -305,13 +343,13 @@
     <script src="./js/jquery.validate.min.js"></script>
     <!-- Plugin for the Wizard, full documentation here: https://github.com/VinceG/twitter-bootstrap-wizard -->
     <script src="./js/jquery.bootstrap-wizard.js"></script>
-    <!--	Plugin for Select, full documentation here: http://silviomoreto.github.io/bootstrap-select -->
+    <!--  Plugin for Select, full documentation here: http://silviomoreto.github.io/bootstrap-select -->
     <script src="./js/bootstrap-selectpicker.js"></script>
     <!--  Plugin for the DateTimePicker, full documentation here: https://eonasdan.github.io/bootstrap-datetimepicker/ -->
     <script src="./js/bootstrap-datetimepicker.min.js"></script>
     <!--  DataTables.net Plugin, full documentation here: https://datatables.net/  -->
     <script src="./js/jquery.dataTables.min.js"></script>
-    <!--	Plugin for Tags, full documentation here: https://github.com/bootstrap-tagsinput/bootstrap-tagsinputs  -->
+    <!--  Plugin for Tags, full documentation here: https://github.com/bootstrap-tagsinput/bootstrap-tagsinputs  -->
     <script src="./js/bootstrap-tagsinput.js"></script>
     <!-- Plugin for Fileupload, full documentation here: http://www.jasny.net/bootstrap/javascript/#fileinput -->
     <script src="./js/jasny-bootstrap.min.js"></script>
