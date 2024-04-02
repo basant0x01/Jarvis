@@ -106,150 +106,134 @@
                     </script>
 
                     <?php
-                    // Function to execute the program
-                    function executeProgram() {
-                        // Bash script file path
-                        $script_path = "bash/subdomain-enumerator.sh";
+                        // Function to execute the program
+                        function executeProgram() {
+                            // Bash script file path
+                            $script_path = "bash/subdomain-enumerator.sh";
 
-                        // Execute the bash script
-                        exec("bash $script_path", $output, $return_status);
+                            // Execute the bash script
+                            exec("bash $script_path", $output, $return_status);
 
-                        // Check if execution was successful
-                        if ($return_status === 0) {
-                            echo "<script>document.getElementById('status').innerHTML = 'Task completed';</script>";
-                            // Output of the script (if any)
-                            foreach ($output as $line) {
-                                echo $line . "<br>";
+                            // Check if execution was successful
+                            if ($return_status === 0) {
+                                echo "<script>document.getElementById('status').innerHTML = 'Task completed';</script>";
+                                // Output of the script (if any)
+                                foreach ($output as $line) {
+                                    echo $line . "<br>";
+                                }
+
+                                // Meta refresh tag to reload the page instantly
+                                echo '<meta http-equiv="refresh" content="0">';
+                            } else {
+                                echo "<script>document.getElementById('status').innerHTML = 'Error executing bash script!';</script>";
                             }
-
-                            // Meta refresh tag to reload the page instantly
-                            echo '<meta http-equiv="refresh" content="0">';
-                        } else {
-                            echo "<script>document.getElementById('status').innerHTML = 'Error executing bash script!';</script>";
                         }
-                    }
 
-                    // Function to insert subdomains into the database
-                    function insertSubdomains($con, $subdomains_file, $program_id) {
-                        // Check if the file exists
-                        if (file_exists($subdomains_file)) {
-                            // Read the contents of the file
-                            $subdomains = file_get_contents($subdomains_file);
+                        // Function to insert subdomains into the database
+                        function insertSubdomains($con, $subdomains_file, $program_id) {
+                            // Check if the file exists
+                            if (file_exists($subdomains_file)) {
+                                // Read the contents of the file
+                                $subdomains = file_get_contents($subdomains_file);
 
-                            // Trim to remove leading/trailing whitespaces
-                            $subdomains = trim($subdomains);
+                                // Trim to remove leading/trailing whitespaces
+                                $subdomains = trim($subdomains);
 
-                            // Check if subdomains are not empty
-                            if (!empty($subdomains)) {
-                                // SQL query to update program_subdomains column for given program_id
-                                $update_query = "UPDATE my_projects SET program_subdomains = ? WHERE program_id = ?";
+                                // Check if subdomains are not empty
+                                if (!empty($subdomains)) {
+                                    // SQL query to update program_subdomains column for given program_id
+                                    $update_query = "UPDATE my_projects SET program_subdomains = ? WHERE program_id = ?";
 
-                                // Prepare statement
-                                $stmt = $con->prepare($update_query);
+                                    // Prepare statement
+                                    $stmt = $con->prepare($update_query);
 
-                                if ($stmt) {
-                                    // Bind parameters
-                                    $stmt->bind_param("si", $subdomains, $program_id);
+                                    if ($stmt) {
+                                        // Bind parameters
+                                        $stmt->bind_param("si", $subdomains, $program_id);
 
-                                    // Execute the statement
-                                    if ($stmt->execute()) {
-                                        echo "Subdomains inserted successfully into the database for program ID $program_id.";
+                                        // Execute the statement
+                                        if ($stmt->execute()) {
+                                            echo "Subdomains inserted successfully into the database for program ID $program_id.";
+                                        } else {
+                                            echo "Error executing SQL statement: " . $stmt->error;
+                                        }
+
+                                        // Close statement
+                                        $stmt->close();
                                     } else {
-                                        echo "Error executing SQL statement: " . $stmt->error;
+                                        echo "Error preparing SQL statement: " . $con->error;
                                     }
-
-                                    // Close statement
-                                    $stmt->close();
                                 } else {
-                                    echo "Error preparing SQL statement: " . $con->error;
+                                    echo "Subdomains file is empty.";
                                 }
                             } else {
-                                echo "Subdomains file is empty.";
+                                echo "Subdomains file not found.";
                             }
-                        } else {
-                            echo "Subdomains file not found.";
                         }
-                    }
 
-                    // Function to add domain to scope.txt file
-                    function addDomainToScope($domain) {
-                        // Path to the scope file
-                        $scope_file = "bash/bash-results/scope.txt";
+                        // Function to fetch domains from database and save to scope.txt
+                        function saveDomainsToScope($con, $program_id) {
+                            // Path to the scope file
+                            $scope_file = "bash/bash-results/scope.txt";
 
-                        // Append the domain to the scope file
-                        if (!empty($domain)) {
-                            file_put_contents($scope_file, $domain . PHP_EOL, FILE_APPEND);
-                            echo "Domain added to scope file.";
-                        } else {
-                            echo "No domain found to add.";
+                            // Fetch the domain from the database based on program_id
+                            $query = "SELECT program_domains FROM my_projects WHERE program_id = $program_id";
+                            $result = mysqli_query($con, $query);
+
+                            // Fetch the domain from the result
+                            $row = mysqli_fetch_assoc($result);
+                            $domain = $row['program_domains'];
+
+                            // Append the domain to the scope file
+                            if (!empty($domain)) {
+                                file_put_contents($scope_file, $domain . PHP_EOL, FILE_APPEND);
+                                echo "Domain added to scope file.";
+                            } else {
+                                echo "No domain found to add.";
+                            }
                         }
-                    }
 
-                    // Function to insert all subdomains into program_subdomains column
-                    function insertAllSubdomains($con, $subdomains_file, $program_id) {
-                        // Check if the file exists
-                        if (file_exists($subdomains_file)) {
-                            // Read the contents of the file
-                            $subdomains = file($subdomains_file, FILE_IGNORE_NEW_LINES | FILE_SKIP_EMPTY_LINES);
+                        // Check if the button is clicked to insert subdomains
+                        if (isset($_POST['insert_subdomains'])) {
+                            // MySQL connection parameters
+                            $servername = "localhost";
+                            $username = "root";
+                            $password = "";
+                            $database = "lazydb";
 
-                            // Implode the array to a string
-                            $subdomains_string = implode(", ", $subdomains);
+                            // Create connection
+                            $con = new mysqli($servername, $username, $password, $database);
+
+                            // Check connection
+                            if ($con->connect_error) {
+                                die("Connection failed: " . $con->connect_error);
+                            }
+
+                            // Get program_id from GET parameters
+                            $program_id = isset($_GET['program_id']) ? intval($_GET['program_id']) : 0;
+
+                            // Save domains to scope.txt
+                            saveDomainsToScope($con, $program_id);
+
+                            // Execute the subdomain-enumerator.sh
+                            executeProgram();
+
+                            // Path to the subdomains file
+                            $subdomains_file = "bash/bash-results/subdomains.txt";
 
                             // Insert subdomains into the database
-                            insertSubdomains($con, $subdomains_string, $program_id);
-                        } else {
-                            echo "Subdomains file not found.";
-                        }
-                    }
+                            insertSubdomains($con, $subdomains_file, $program_id);
 
-                    // Check if the button is clicked to insert subdomains
-                    if (isset($_POST['insert_subdomains'])) {
-                        // MySQL connection parameters
-                        $servername = "localhost";
-                        $username = "root";
-                        $password = "";
-                        $database = "lazydb";
-
-                        // Create connection
-                        $con = new mysqli($servername, $username, $password, $database);
-
-                        // Check connection
-                        if ($con->connect_error) {
-                            die("Connection failed: " . $con->connect_error);
+                            // Close MySQL connection
+                            $con->close();
                         }
 
-                        // Get program_id from GET parameters
-                        $program_id = isset($_GET['program_id']) ? intval($_GET['program_id']) : 0;
-
-                        // Fetch the domain from the database based on program_id
-                        $query = "SELECT program_domains FROM my_projects WHERE program_id = $program_id";
-                        $result = mysqli_query($con, $query);
-
-                        // Fetch the domain from the result
-                        $row = mysqli_fetch_assoc($result);
-                        $domain = $row['program_domains'];
-
-                        // Add domain to scope file
-                        addDomainToScope($domain);
-
-                        // Path to the subdomains file
-                        $subdomains_file = "bash/bash-results/subdomains.txt";
-
-                        // Insert all subdomains into the database
-                        insertAllSubdomains($con, $subdomains_file, $program_id);
-
-                        // Close MySQL connection
-                        $con->close();
-                    }
-
-                    // Check if the button is clicked to execute the program
-                    if (isset($_POST['run_script'])) {
-                        // Execute the program
-                        executeProgram();
-                    }
-                    ?>
-
-
+                        // Check if the button is clicked to execute the program
+                        if (isset($_POST['run_script'])) {
+                            // Execute the program
+                            executeProgram();
+                        }
+                        ?>
                   </div>
                   <div class="card-body">
                     <div class="stats">
