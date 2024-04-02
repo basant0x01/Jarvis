@@ -120,12 +120,16 @@
                                 foreach ($output as $line) {
                                     echo $line . "<br>";
                                 }
+                                
+                                // Meta refresh tag to reload the page instantly
+                                echo '<meta http-equiv="refresh" content="0">';
+                                
                             } else {
                                 echo "<script>document.getElementById('status').innerHTML = 'Error executing bash script!';</script>";
                             }
                         }
+                        ?>
 
-                    ?>
 
                     <?php
                     // Function to insert subdomains into the database
@@ -204,7 +208,8 @@
                     if (isset($_POST['run_script'])) {
                         // Execute the program
                         executeProgram();
-                    }
+                      }
+
                     ?>
 
                   </div>
