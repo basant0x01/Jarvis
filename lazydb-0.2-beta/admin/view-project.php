@@ -172,27 +172,31 @@
                       }
                   }
 
-                  // Function to fetch domains from database and save to scope.txt
-                  function saveDomainsToScope($con, $program_id) {
-                      // Path to the scope file
-                      $scope_file = "bash/bash-results/scope.txt";
+                    // Function to fetch domains from database and save to scope.txt
+                    function saveDomainsToScope($con, $program_id) {
+                        // Path to the scope file
+                        $scope_file = "bash/bash-results/scope.txt";
 
-                      // Fetch the domain from the database based on program_id
-                      $query = "SELECT program_domains FROM my_projects WHERE program_id = $program_id";
-                      $result = mysqli_query($con, $query);
+                        // Fetch the domain from the database based on program_id
+                        $query = "SELECT program_domains FROM my_projects WHERE program_id = $program_id";
+                        $result = mysqli_query($con, $query);
 
-                      // Fetch the domain from the result
-                      $row = mysqli_fetch_assoc($result);
-                      $domain = $row['program_domains'];
+                        // Fetch the domain from the result
+                        $row = mysqli_fetch_assoc($result);
+                        $domain = $row['program_domains'];
 
-                      // Append the domain to the scope file
-                      if (!empty($domain)) {
-                          file_put_contents($scope_file, $domain . PHP_EOL, FILE_APPEND);
-                          echo "Domain added to scope file.";
-                      } else {
-                          echo "No domain found to add.";
-                      }
-                  }
+                        // Clear the previous domain from the scope file
+                        file_put_contents($scope_file, '');
+
+                        // Append the domain to the scope file
+                        if (!empty($domain)) {
+                            file_put_contents($scope_file, $domain . PHP_EOL, FILE_APPEND);
+                            echo "Domain added to scope file.";
+                        } else {
+                            echo "No domain found to add.";
+                        }
+                    }
+
 
                   // Check if the button is clicked to insert subdomains
                   if (isset($_POST['insert_subdomains'])) {
