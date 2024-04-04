@@ -70,8 +70,9 @@
                 <div class="card-icon">
                       <img src="./img/Group 1381.png" alt="building" />
                       </div>
-                    <h3 class="card-title">Engine Status</h3>
-                    <a href=""><div id="status">Neutral</div></a>
+                    <h4 class="card-title">Engine Info</h4><hr>
+                    <div style="color: black;" id="status">Engine Status: Neutral</div>
+                    <a href="bash/bash-results/engine-log.txt">View Engine Logs</a>
                   </div>
 
                   <div class="card-body">
@@ -96,12 +97,12 @@
 <!--                 <div class="card-icon">
                       <img src="./img/Group 1382.png" alt="building" />
                     </div> -->
-                    <p class="card-category">Total Subdomains</p>
+                    <h4 class="card-title">Total Subdomains</h4><hr>
                     <a href="view-subdomains.php?program_id=<?php echo $_GET['program_id']; ?>">View Details</a>
                     <h3 class="card-title"><?php echo $total_subdomains; ?></h3>
                     <script>
                     function changeStatus() {
-                        document.getElementById("status").innerHTML = "Engine has running...";
+                        document.getElementById("status").innerHTML = "Engine Status: Running...";
                     }
                     </script>
 
@@ -116,7 +117,7 @@
 
                       // Check if execution was successful
                       if ($return_status === 0) {
-                          echo "<script>document.getElementById('status').innerHTML = 'Task completed';</script>";
+                          echo "<script>document.getElementById('status').innerHTML = 'Engine Status: Task Completed';</script>";
                           // Output of the script (if any)
                           foreach ($output as $line) {
                               // echo $line . "<br>";
@@ -257,59 +258,8 @@
                   </div>
                 </div>
               </div>
-              <div class="col-lg-3 col-md-6 col-sm-6">
-                <div class="custom-icon-card card card-stats">
-                  <div class="card-header card-header-danger card-header-icon">
-<!--                 <div class="card-icon">
-                      <img src="./img/Group 1324.png" alt="building" />
-                    </div> -->
-                    <p class="card-category">N/A</p>
-                    <a href="">N/A</a>
-                    <h3 class="card-title">N/A</h3>
-                  </div>
-                  <div class="card-body">
-                    <div class="stats">
-                      <div class="progress" style="height: 4px">
-                        <div
-                          class="progress-bar bg-danger"
-                          role="progressbar"
-                          style="width: 65%"
-                          aria-valuenow="65"
-                          aria-valuemin="0"
-                          aria-valuemax="100"
-                        ></div>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-              </div>
-              <div class="col-lg-3 col-md-6 col-sm-6">
-                <div class="custom-icon-card card card-stats">
-                  <div class="card-header card-header-info card-header-icon">
-<!--                 <div class="card-icon">
-                      <img src="./img/Group 1383.png" alt="building" />
-                    </div> -->
-                    <p class="card-category">N/A</p>
-                    <a href="">N/A</a>
-                    <h3 class="card-title">N/A</h3>
-                  </div>
-                  <div class="card-body">
-                    <div class="stats">
-                      <div class="progress" style="height: 4px">
-                        <div
-                          class="progress-bar bg-info"
-                          role="progressbar"
-                          style="width: 65%"
-                          aria-valuenow="65"
-                          aria-valuemin="0"
-                          aria-valuemax="100"
-                        ></div>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </div>
+
+
 
 
               <?php
