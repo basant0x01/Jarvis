@@ -259,6 +259,46 @@
                 </div>
               </div>
 
+            <div class="col-lg-3 col-md-6 col-sm-6">
+                <div class="custom-icon-card card card-stats" style="width: 750px;">
+                  <div class="card-header card-header-info card-header-icon">
+<!--                 <div class="card-icon">
+                      <img src="./img/Group 1383.png" alt="building" />
+                    </div> -->
+                    <h4 class="card-title"><center>Technology</center></h4><hr>
+                    <style>
+                      .flex-container {
+                        display: flex;
+                        flex-wrap: nowrap;
+                        background-color: hotpink;
+                        color: black;
+                        margin-bottom: 7px;
+                      }
+
+                      .flex-container > div {
+                        background-color: white;
+                        width: 200px;
+                        margin: 5px;
+                        text-align: center;
+                        line-height: 50px;
+                        font-size: 20px;
+                        margin-top: 20px;
+                      }
+                      </style>
+
+                      <div class="flex-container">
+                      <div>WordPress<br><span>12</span></div>
+                      <div>Nginx<br><span>38</span></div>
+                      <div>Java<br><span>122</span></div> 
+                      <div>PHP<br><span>32</span></div>
+                      <div>Durpal<br><span>72</span></div>
+                    </div>
+                    <center><a href="">Lookup More...</a></center>
+                  </div>
+                </div>
+              </div>
+            </div>
+
 
 
 
