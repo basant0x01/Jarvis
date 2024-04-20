@@ -52,27 +52,28 @@
                       <img src="./img/Group 1382.png" alt="building" />
                     </div>
 
-                    <?php
+                      <?php
 
-                        $query = "SELECT program_subdomains FROM my_projects";
-                        $result = mysqli_query($con, $query);
+                      $query = "SELECT program_subdomains, program_manual_subdomains FROM my_projects";
+                      $result = mysqli_query($con, $query);
 
-                        $subdomains = '';
+                      $subdomains = '';
 
-                        if ($result) {
-                            while ($row = mysqli_fetch_assoc($result)) {
-                                $subdomain_string = $row['program_subdomains'];
-                                $subdomain_array = explode(",", $subdomain_string); // Assuming subdomains are separated by commas
-                                foreach ($subdomain_array as $subdomain) {
-                                    // Trim to remove leading/trailing whitespaces
-                                    $subdomains .= trim($subdomain) . "\n";
-                                }
-                            }
-                        }
+                      if ($result) {
+                          while ($row = mysqli_fetch_assoc($result)) {
+                              $subdomain_string = $row['program_subdomains'] . ',' . $row['program_manual_subdomains'];
+                              $subdomain_array = explode(",", $subdomain_string); // Assuming subdomains are separated by commas
+                              foreach ($subdomain_array as $subdomain) {
+                                  // Trim to remove leading/trailing whitespaces
+                                  $subdomains .= trim($subdomain) . "\n";
+                              }
+                          }
+                      }
 
-                        $total_subdomains = count(explode("\n", trim($subdomains)));
+                      $total_subdomains = count(explode("\n", trim($subdomains)));
 
                       ?>
+
 
                       <p class="card-category">Total Subdomains</p>
                       <h3 class="card-title"><?php echo $total_subdomains; ?></h3>
@@ -166,7 +167,7 @@
 
                         <div style="margin-top: 11px;margin-right: 40px;">
                           <form method="POST">
-                              <input type="text" name="search_query" placeholder="Src: Program/Subdomain">
+                              <input type="text" name="search_query" placeholder=" Src: Program/Subdomain">
                               <button type="submit" name="search">Search</button><br>
                           </form>
                         </div>
@@ -222,7 +223,7 @@
                                 <?php while($row = mysqli_fetch_assoc($result)) { ?>
                                     <tr>
                                         <td><img class="circle" src="./img/19.png" alt="user"></td>
-                                        <td><a href="view-project.php?program_id=<?php echo $row['program_id']; ?>"><?php echo $row['program_name']; ?></a></td>
+                                        <td><a href="dev-view-project.php?program_id=<?php echo $row['program_id']; ?>"><?php echo $row['program_name']; ?></a></td>
                                         <td><?php echo $row['program_platform']; ?></td>
                                         <td><?php echo $row['program_visiblity']; ?></td>
                                         <td><?php echo $row['program_type']; ?></td>
