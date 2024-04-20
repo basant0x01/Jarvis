@@ -66,11 +66,14 @@
                       </div>
 
                     <p><label for="program_domains"></label></p>
-                    <textarea id="program_domains" name="program_domains" rows="4" cols="50" placeholder=" Paste your domains"></textarea><br>
+                    <textarea id="program_domains" name="program_domains" rows="4" cols="50" placeholder=" Your wildcard domains (*.example.com)"></textarea><br>
               
                 
                     <p><label for="program_subdomains"></label></p>
-                    <textarea id="program_subdomains" name="program_subdomains" rows="4" cols="50" placeholder=" Paste your subdomains"></textarea><br>
+                    <textarea id="program_subdomains" name="program_subdomains" rows="4" cols="50" placeholder=" Your subdomains, if available"></textarea><br>
+
+                    <p><label for="program_manual_subdomains"></label></p>
+                    <textarea id="program_manual_subdomains" name="program_manual_subdomains" rows="4" cols="50" placeholder=" Add manual subdomains, if available"></textarea><br>
                   
                       <div class="row mt-5">
                         <div class="col-md-6">
@@ -122,9 +125,10 @@
                       $program_type = $_POST['program_type'];
                       $program_domains = $_POST['program_domains'];
                       $program_subdomains = $_POST['program_subdomains'];
+                      $program_manual_subdomains = $_POST['program_manual_subdomains'];
 
                       // Construct the INSERT query
-                      $query = "INSERT INTO my_projects (program_name, program_platform, program_visiblity, program_type, program_domains, program_subdomains) VALUES ('$program_name', '$program_platform', '$program_visiblity', '$program_type', '$program_domains', '$program_subdomains')";
+                      $query = "INSERT INTO my_projects (program_name, program_platform, program_visiblity, program_type, program_domains, program_subdomains, program_manual_subdomains) VALUES ('$program_name', '$program_platform', '$program_visiblity', '$program_type', '$program_domains', '$program_subdomains', '$program_manual_subdomains')";
 
                       // Execute the query
                       if (mysqli_query($con, $query)) {
@@ -144,9 +148,6 @@
                       mysqli_close($con);
                   }
               ?>
-
-
-               
 
               <div class="col-md-4">
                 <div class="card card-profile">
