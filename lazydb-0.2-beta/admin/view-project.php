@@ -38,28 +38,29 @@
                     </div>
                   </div>
 
-                        <?php
+                  <?php
 
-                        $program_id = $_GET['program_id'];
-                        $query = "SELECT program_subdomains FROM my_projects WHERE program_id = $program_id";
-                        $result = mysqli_query($con, $query);
+                  $program_id = $_GET['program_id'];
+                  $query = "SELECT program_subdomains, program_manual_subdomains FROM my_projects WHERE program_id = $program_id";
+                  $result = mysqli_query($con, $query);
 
-                        $subdomains = '';
+                  $subdomains = '';
 
-                        if ($result) {
-                            while ($row = mysqli_fetch_assoc($result)) {
-                                $subdomain_string = $row['program_subdomains'];
-                                $subdomain_array = explode(",", $subdomain_string); // Assuming subdomains are separated by commas
-                                foreach ($subdomain_array as $subdomain) {
-                                    // Trim to remove leading/trailing whitespaces
-                                    $subdomains .= trim($subdomain) . "\n";
-                                }
-                            }
-                        }
+                  if ($result) {
+                      while ($row = mysqli_fetch_assoc($result)) {
+                          $subdomain_string = $row['program_subdomains'] . ',' . $row['program_manual_subdomains'];
+                          $subdomain_array = explode(",", $subdomain_string); // Assuming subdomains are separated by commas
+                          foreach ($subdomain_array as $subdomain) {
+                              // Trim to remove leading/trailing whitespaces
+                              $subdomains .= trim($subdomain) . "\n";
+                          }
+                      }
+                  }
 
-                        $total_subdomains = count(explode("\n", trim($subdomains)));
+                  $total_subdomains = count(explode("\n", trim($subdomains)));
 
-                      ?>
+                  ?>
+
 
           <div class="container-fluid">
 
@@ -241,74 +242,69 @@
                   }
                   ?>
 
-                  </div>
-                  <div class="card-body">
-                    <div class="stats">
-                      <div class="progress" style="height: 4px">
-                        <div
-                          class="progress-bar bg-success"
-                          role="progressbar"
-                          style="width: 65%"
-                          aria-valuenow="65"
-                          aria-valuemin="0"
-                          aria-valuemax="100"
-                        ></div>
-                      </div>
+                            </div>
+                                    <div class="card-body">
+                                        <div class="stats">
+                                            <div class="progress" style="height: 4px">
+                                                <div
+                                                    class="progress-bar bg-success"
+                                                    role="progressbar"
+                                                    style="width: 65%"
+                                                    aria-valuenow="65"
+                                                    aria-valuemin="0"
+                                                    aria-valuemax="100"
+                                                ></div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="col-lg-3 col-md-6 col-sm-6">
+                                <div class="custom-icon-card card card-stats" style="width: 750px;">
+                                    <div class="card-header card-header-info card-header-icon">
+                                        <h4 class="card-title"><center>Technology</center></h4><hr>
+                                        <style>
+                                            .flex-container {
+                                                display: flex;
+                                                flex-wrap: nowrap;
+                                                background-color: hotpink;
+                                                color: black;
+                                                margin-bottom: 7px;
+                                            }
+
+                                            .flex-container > div {
+                                                background-color: white;
+                                                width: 200px;
+                                                margin: 5px;
+                                                text-align: center;
+                                                line-height: 50px;
+                                                font-size: 20px;
+                                                margin-top: 20px;
+                                            }
+                                        </style>
+
+                                        <div class="flex-container">
+                                            <div>WordPress<br><span>12</span></div>
+                                            <div>Nginx<br><span>38</span></div>
+                                            <div>Java<br><span>122</span></div> 
+                                            <div>PHP<br><span>32</span></div>
+                                            <div>Durpal<br><span>72</span></div>
+                                        </div>
+                                        <center><a href="">Lookup More...</a></center>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <?php
+                    }
+                        ?>
                     </div>
-                  </div>
                 </div>
-              </div>
-
-            <div class="col-lg-3 col-md-6 col-sm-6">
-                <div class="custom-icon-card card card-stats" style="width: 750px;">
-                  <div class="card-header card-header-info card-header-icon">
-<!--                 <div class="card-icon">
-                      <img src="./img/Group 1383.png" alt="building" />
-                    </div> -->
-                    <h4 class="card-title"><center>Technology</center></h4><hr>
-                    <style>
-                      .flex-container {
-                        display: flex;
-                        flex-wrap: nowrap;
-                        background-color: hotpink;
-                        color: black;
-                        margin-bottom: 7px;
-                      }
-
-                      .flex-container > div {
-                        background-color: white;
-                        width: 200px;
-                        margin: 5px;
-                        text-align: center;
-                        line-height: 50px;
-                        font-size: 20px;
-                        margin-top: 20px;
-                      }
-                      </style>
-
-                      <div class="flex-container">
-                      <div>WordPress<br><span>12</span></div>
-                      <div>Nginx<br><span>38</span></div>
-                      <div>Java<br><span>122</span></div> 
-                      <div>PHP<br><span>32</span></div>
-                      <div>Durpal<br><span>72</span></div>
-                    </div>
-                    <center><a href="">Lookup More...</a></center>
-                  </div>
-                </div>
-              </div>
             </div>
-
-
-
-
-              <?php
-
-              }
-
-              ?>
-
-
+        </div>
+    </div>
+</div>
 
     <!--   Core JS Files   -->
     <script src="./js/vendor/jquery-3.2.1.min.js"></script>
