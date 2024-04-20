@@ -85,6 +85,9 @@
                 
                     <p><label for="program_subdomains"></label></p>
                     <textarea id="program_subdomains" name="program_subdomains" rows="4" cols="50" placeholder=" Paste your subdomains"><?php echo $row['program_subdomains']; ?></textarea><br>
+
+                    <p><label for="program_subdomains"></label></p>
+                    <textarea id="program_manual_subdomains" name="program_manual_subdomains" rows="4" cols="50" placeholder=" Add your manual subdomains"><?php echo $row['program_manual_subdomains']; ?></textarea><br>
          
 
                       <div class="row mt-5">
@@ -137,8 +140,9 @@
                   $program_type = $_POST['program_type'];
                   $program_domains = $_POST['program_domains'];
                   $program_subdomains = $_POST['program_subdomains'];
+                  $program_manual_subdomains = $_POST['program_manual_subdomains'];
 
-                  $query = "UPDATE my_projects SET program_id='$program_id', program_name='$program_name', program_platform='$program_platform', program_visiblity='$program_visiblity', program_type='$program_type', program_domains='$program_domains', program_subdomains='$program_subdomains' WHERE program_id=$program_id";
+                  $query = "UPDATE my_projects SET program_id='$program_id', program_name='$program_name', program_platform='$program_platform', program_visiblity='$program_visiblity', program_type='$program_type', program_domains='$program_domains', program_subdomains='$program_subdomains', program_manual_subdomains='$program_manual_subdomains' WHERE program_id=$program_id";
 
                   if (mysqli_query($con, $query)) {
 
@@ -170,7 +174,7 @@
                   </div>
                   <div class="card-body">
                     <h6 class="card-category text-gray">
-                      Lorem Ipsum
+                      Basant Karki
                     </h6>
                     <h4 class="card-title"><?php echo $_SESSION['username']; ?></h4>
                     <span class="card-description pt-3">
