@@ -3,14 +3,14 @@ include "db.php";
 
 $program_id = $_GET['program_id'];
 
-$query = "SELECT program_subdomains FROM my_projects WHERE program_id = $program_id";
+$query = "SELECT program_subdomains, program_manual_subdomains FROM my_projects WHERE program_id = $program_id";
 $result = mysqli_query($con, $query);
 
 $subdomains = '';
 
 if ($result) {
     while ($row = mysqli_fetch_assoc($result)) {
-        $subdomain_string = $row['program_subdomains'];
+        $subdomain_string = $row['program_subdomains'] . ',' . $row['program_manual_subdomains'];
         $subdomain_array = explode(",", $subdomain_string); // Assuming subdomains are separated by commas
         foreach ($subdomain_array as $subdomain) {
             // Trim to remove leading/trailing whitespaces
