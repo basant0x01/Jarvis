@@ -49,7 +49,7 @@
       </div>
 
       <div class="search-box">
-        <input type="text" placeholder="Search...">
+        <input type="text" placeholder="Subdomains / Programs">
         <i class='bx bx-search' ></i>
       </div>
 
@@ -80,7 +80,7 @@
             <div class="number">58,876</div>
             <div class="indicator">
               <i class='bx bx-up-arrow-alt'></i>
-              <span class="text">Lorem Ipsum</span>
+              <span class="text">Added in last 24/hr</span>
             </div>
           </div>
           <i class='bx bxs-cart-add cart two' ></i>
@@ -88,11 +88,11 @@
 
         <div class="box">
           <div class="right-side">
-            <div class="box-topic">Lorem Ipsum</div>
-            <div class="number">Lorem Ipsum</div>
+            <div class="box-topic">New Subdomains</div>
+            <div class="number">64</div>
             <div class="indicator">
               <i class='bx bx-up-arrow-alt'></i>
-              <span class="text">Lorem Ipsum</span>
+              <span class="text">Found in last 24/hr</span>
             </div>
           </div>
           <i class='bx bx-cart cart three' ></i>
@@ -100,11 +100,11 @@
 
         <div class="box">
           <div class="right-side">
-            <div class="box-topic">Lorem Ipsum</div>
-            <div class="number">Lorem Ipsum</div>
+            <div class="box-topic">Subdomain Takeover's</div>
+            <div class="number">14</div>
             <div class="indicator">
               <i class='bx bx-down-arrow-alt down'></i>
-              <span class="text">Lorem Ipsum</span>
+              <span class="text">No Data Available</span>
             </div>
           </div>
           <i class='bx bxs-cart-download cart four' ></i>
